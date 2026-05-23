@@ -1,14 +1,24 @@
 { pkgs, ... }:
 {
+  imports = [
+    ./dots/starship/gruvbox.nix
+    ./dots/wezterm/default.nix
+  ];
+
   home.username = "charlie";
   home.homeDirectory = "/home/charlie";
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
     firefox
-    jetbrains.idea-community
+    jetbrains.idea-oss
     networkmanagerapplet
+    rofi
+    arandr
+    claude-code
   ];
+
+  programs.fish.enable = true;
 
   programs.git = {
     enable = true;
