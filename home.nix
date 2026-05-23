@@ -16,6 +16,7 @@
     rofi
     arandr
     claude-code
+    mangohud
   ];
 
   programs.fish.enable = true;

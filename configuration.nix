@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -12,9 +12,30 @@
 
   services.xserver = {
     enable = true;
+    videoDrivers = [ "nvidia" ];
     windowManager.awesome.enable = true;
     displayManager.lightdm.enable = true;
   };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = false;
+  };
+
+  programs.gamemode.enable = true;
 
   services.pipewire = {
     enable = true;
