@@ -9,19 +9,31 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, ... }:
+  let
+    system = "x86_64-linux";
+    username = "charlie";
+    hostName = "desktop";
+    DE = "awesome";
+  in {
     nixosConfigurations.nixos-desktop = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
+      specialArgs = { inherit system username hostName DE; };
       modules = [
         ./hosts/desktop/default.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.charlie = import ./users/charlie/home.nix;
+          home-manager.extraSpecialArgs = { inherit username; };
+          home-manager.users.${username} = import ./users/${username}/home.nix;
           home-manager.backupFileExtension = "bak";
         }
       ];
+    };
+    templates.default = {
+      path = ./.;
+      description = "The default template for Eriim's nixflakes.";
     };
   };
 }

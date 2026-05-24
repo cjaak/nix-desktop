@@ -1,21 +1,12 @@
-{ pkgs, ... }: {
-  home.username = "charlie";
-  home.homeDirectory = "/home/charlie";
+{ pkgs, username, ... }: {
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
-
-  home.packages = with pkgs; [
-    networkmanagerapplet
-    arandr
-    mangohud
-    feh
-    pamixer
-    xorg.xprop
-  ];
 
   programs.git = {
     enable = true;
     settings.user = {
-      name = "charlie";
+      name = username;
       email = "chwiegand@proton.me";
     };
   };
