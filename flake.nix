@@ -13,12 +13,12 @@
     nixosConfigurations.nixos-desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./hosts/desktop/default.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.charlie = import ./home.nix;
+          home-manager.users.charlie = import ./users/charlie/home.nix;
           home-manager.backupFileExtension = "bak";
         }
       ];

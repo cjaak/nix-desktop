@@ -1,0 +1,153 @@
+// Theme (apple colors).
+* {
+    black:      #050505;
+    white0:     #FAFAFA;
+    white1:     #FAFAFA;
+    white2:     #FAFAFA;
+    blue:       @cyan;
+    cyan:       #64d2ff;
+    red:        #ff453a;
+    orange:     #ff9f0a;
+    yellow:     #ffd60a;
+    green:      #30d158;
+    mint:       #63e6e2;
+
+    background:     @black;
+    background-alt: @black;
+    foreground:     @white2;
+    selected:       @mint;
+    active:         @blue2;
+    urgent:         @red;
+    border:         @black;
+}
+
+* {
+    outer-border-radius: 11px;
+    border-radius: 11px;
+    padding-normal: 1.5%;
+    padding-main: 1.5% 1% 1.5% 0.9%;
+    padding-normal-bottom: 0 0 1.5% 0;
+    padding-small: 1%;
+    input-icon-padding: 1% 1.5%;
+    input-text-padding: 1% 0 0 0;
+    icon-size: 2.8%;
+    element-spacing: 1%;
+    element-padding: 0.347%;
+}
+
+configuration {
+    show-icons:                true;
+    font:                      "JetBrainsMono Nerd Font Bold 13";
+    icon-theme:                "Papirus-Dark";
+    drun {
+        fallback-icon:          "kblackbox";
+    }
+    dmenu {
+        fallback-icon:          "gpa";
+    }
+    monitor: -1;
+}
+
+window {
+    width:                      35%;
+    height:                     41.1112%;
+    border-radius:              @outer-border-radius;
+    border-color:               @border;
+    background-color:           @background;
+    padding:                    0;
+    border:                     0;
+    margin:                     0;
+}
+
+mainbox {
+    border:                     2px solid;
+    border-radius:              @outer-border-radius;
+    border-color:               @mint;
+    padding:                    @padding-main;
+    children:                   [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing:                    @padding-small;
+    padding:                    @padding-normal-bottom;
+    border-radius:              @border-radius;
+    border-color:               @selected;
+    background-color:           @background-alt;
+    text-color:                 @foreground;
+    children:                   [ "prompt", "entry" ];
+    margin:                     0;
+}
+
+prompt {
+    background-color:           @blue;
+    text-color:                 @background;
+    border-color:               @blue;
+    border-radius:              @border-radius;
+    padding:                    @input-icon-padding;
+    margin:                     0;
+}
+
+entry {
+    padding:                    @input-text-padding;
+    placeholder:                "Search...";
+    margin:                     0;
+}
+
+listview {
+    columns:                    2;
+    cycle:                      true;
+    dynamic:                    true;
+    reverse:                    false;
+    fixed-height:               true;
+    fixed-columns:              true;
+    spacing:                    5px;
+    margin:                     0px;
+    padding:                    0px;
+    border:                     0px;
+    border-radius:              0;
+    text-color:                 @foreground;
+    scrollbar:                  false;
+}
+
+element {
+    spacing:                    @element-spacing;
+    margin:                     0px;
+    padding:                    @element-padding;
+    border:                     0px;
+    border-radius:              @border-radius;
+    border-color:               @selected;
+    text-color:                 @foreground;
+}
+element normal.normal {
+    background-color:           @background;
+    text-color:                 @foreground;
+}
+element alternate.normal {
+    background-color:           @background;
+    text-color:                 @foreground;
+}
+element selected.normal {
+    background-color:           @selected;
+    text-color:                 @background;
+}
+element-icon {
+    size:                       @icon-size;
+}
+element-text {
+    vertical-align:             0.5;
+    horizontal-align:           0.0;
+}
+
+error-message {
+    border:                     2px solid;
+    border-radius:              @border-radius;
+    border-color:               @urgent;
+    background-color:           @background;
+    text-color:                 @foreground;
+    padding:                    @padding-normal;
+}
+textbox {
+    vertical-align:             0.5;
+    horizontal-align:           0.5;
+    highlight:                  none;
+}

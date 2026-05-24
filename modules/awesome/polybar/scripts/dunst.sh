@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+Main() {
+    if [[ $(dunstctl is-paused) = true ]]; then
+        echo "paused"
+        dunstctl set-paused toggle
+        polybar-msg action dunst hook 1;
+    else
+        echo "not"
+        dunstctl set-paused toggle
+        polybar-msg action dunst hook 0
+    fi
+}
+
+Main "$@"

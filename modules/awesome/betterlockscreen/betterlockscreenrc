@@ -1,0 +1,45 @@
+display_on=0
+span_image=false
+lock_timeout=300
+fx_list=(dim blur dimblur pixel dimpixel color)
+dim_level=40
+blur_level=1
+pixel_scale=10,1000
+wallpaper_cmd="feh --bg-fill"
+quiet=true
+
+# Formatting.
+locktext=" Locked"
+veriftext="..."
+wrongtext=""
+font="JetBrainsMono Nerd Font"
+time_format="%H:%M"
+
+# Green.
+keyhlcolor=30d158
+
+# Yellow.
+modifcolor=ffd60a
+bshlcolor=ffd60a
+
+# Red.
+wrongcolor=ff453a
+insidewrongcolor=ff453a
+
+# White.
+verifcolor=FAFAFA
+timecolor=FAFAFA
+greetercolor=FAFAFA
+layoutcolor=FAFAFA
+ringvercolor=FAFAFA
+ringcolor=FAFAFA
+ringwrongcolor=FAFAFA
+separatorcolor=FAFAFA
+
+# Black.
+insidevercolor=050505
+loginbox=050505
+bgcolor=050505
+solid_color=050505
+insidecolor=050505
+loginshadow=050505
