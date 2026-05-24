@@ -17,7 +17,12 @@
     arandr
     claude-code
     mangohud
+    feh
+    picom
+    polybar
+    dunst
   ];
+
 
   programs.fish.enable = true;
 
