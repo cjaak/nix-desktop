@@ -1,3 +1,11 @@
-{ ... }: {
-  networking.networkmanager.enable = true;
+{ hostName, username,... }: {
+   networking = {
+      networkmanager = {
+        enable = true;
+      };
+      inherit hostName;
+    };
+    users.users.${username} = {
+      extraGroups = [ "networkmanager" ];
+    };
 }
