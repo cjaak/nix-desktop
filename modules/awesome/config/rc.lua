@@ -4,6 +4,7 @@ pcall(require, "luarocks.loader")
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+require("awful.ewmh")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 

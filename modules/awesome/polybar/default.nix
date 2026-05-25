@@ -12,6 +12,14 @@
       source = ./launch.sh;
       executable = true;
     };
+    ".config/polybar/scripts/workspaces.sh" = {
+      source = ./scripts/workspaces.sh;
+      executable = true;
+    };
+    ".config/polybar/scripts/switch-workspace.sh" = {
+      source = ./scripts/switch-workspace.sh;
+      executable = true;
+    };
     ".config/polybar/scripts/dunst.sh" = {
       source = ./scripts/dunst.sh;
       executable = true;
