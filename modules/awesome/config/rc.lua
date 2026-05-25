@@ -222,15 +222,6 @@ awful.rules.rules = {
             size_hint_honor      = true,
         }
     },
-
-    {
-        rule_any = {
-            class = { "steam_app_*", "Steam" },
-            name  = { "Steam", "Proton" },
-        },
-        properties = { floating = true, fullscreen = true, ontop = true },
-    },
-
     {
         rule = { class = "Chromium-browser" },
         properties = {
