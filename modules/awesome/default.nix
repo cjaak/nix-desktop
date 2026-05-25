@@ -1,9 +1,27 @@
 { pkgs, username, ... }: {
   services.xserver = {
     enable = true;
-    windowManager.awesome.enable = true;
-    displayManager.lightdm.enable = true;
+    windowManager.awesome = {
+        enable = true;
+        luaModules = with pkgs.luaPackages; [ luarocks luadbi-mysql ];
+    };
   };
+
+  services.displayManager.ly = {
+      enable = true;
+      x11Support = true;
+      settings = {
+        # animation = "matrix";
+        bigclock = true;
+        hide_key_hints = true;
+        clear_password = true;
+        hide_version_string = true;
+        term_reset_cmd = "${pkgs.ncurses}/bin/tput reset; ${pkgs.coreutils}/bin/printf '%b' '\\e]P0282828\\e]P7ebdbb2\\ec'";
+      };
+    };
+
+  systemd.services.display-manager.serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/printf '%b' '\\e]P0282828\\e]P7ebdbb2\\ec'";
+
   services.gvfs.enable = true;
 
   home-manager.sharedModules = [
