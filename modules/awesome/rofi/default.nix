@@ -14,5 +14,10 @@
       source = ./window.sh;
       executable = true;
     };
+    ".config/rofi/powermenu/run.sh" = {
+      source = ./powermenu/run.sh;
+      executable = true;
+    };
+    ".config/rofi/powermenu/style.rasi".source = ./powermenu/style.rasi;
   };
 }

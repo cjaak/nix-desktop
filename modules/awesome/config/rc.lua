@@ -72,12 +72,18 @@ end
 local globalkeys = gears.table.join(
     awful.key({ modkey, }, "t", function() awful.spawn("wezterm") end),
     awful.key({ modkey, }, "d", function() awful.spawn("/home/charlie/.config/rofi/apps.sh") end),
+    awful.key({ modkey, "Shift" }, "e", function() awful.spawn("/home/charlie/.config/rofi/powermenu/run.sh") end),
     awful.key({ modkey, }, "s", function() awful.spawn("/home/charlie/.config/rofi/tmux.sh") end),
     awful.key({ modkey, }, "b", function() awful.spawn("firefox") end),
     awful.key({ modkey, }, "Tab", function() awful.spawn("/home/charlie/.config/rofi/window.sh") end),
     -- HACK: Seems to be a bug in flameshot.
     awful.key({ modkey, "Shift" }, "s",
         function() awful.spawn("bash -c 'flameshot gui -r | xclip -selection clipboard -t image/png'") end),
+    awful.key({ modkey, }, "m", function() awful.spawn("/home/charlie/.config/polybar/scripts/dunst.sh") end),
+    awful.key({ modkey, }, "n", function() awful.spawn("dunstctl close-all") end),
+    awful.key({ modkey, }, "-", function() awful.spawn("/home/charlie/.config/MangoHud/modify_fps_cap.sh -10") end),
+    awful.key({ modkey, }, "=", function() awful.spawn("/home/charlie/.config/MangoHud/modify_fps_cap.sh 10") end),
+    awful.key({ modkey, }, "Escape", function() awful.spawn("betterlockscreen --lock") end),
 
     -- Audio
     awful.key({}, "XF86AudioRaiseVolume", function() awful.spawn("pamixer -i 5") end),

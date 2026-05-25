@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, username, ... }: {
   imports = [
     ./fish
     ./fonts
@@ -18,6 +18,17 @@
     unzip
     vhs
     zoxide
+    zip
+    unzip
+    gcc
+    python3
+    python3Packages.pip
+    ffmpeg
+    cron
+    file
+    wget
+    openssl
+    nodejs
   ];
 
   home-manager.sharedModules = [
@@ -26,5 +37,14 @@
     (import ./tmux)
     (import ./nvim)
     (import ./yazi)
+    ({ ... }: {
+      programs.git = {
+        enable = true;
+        settings.user = {
+          name = username;
+          email = "chwiegand@proton.me";
+        };
+      };
+    })
   ];
 }

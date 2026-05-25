@@ -25,14 +25,15 @@
     home.packages = with pkgs; [
       networkmanagerapplet
       arandr
-      mangohud
       feh
       pamixer
       xorg.xprop
+      pfetch
     ];
   };
 
   environment.systemPackages = with pkgs; [
+    luarocks
     eww
     xfce.thunar
     xfce.tumbler

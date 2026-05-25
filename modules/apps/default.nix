@@ -1,5 +1,5 @@
 { ... }: {
-  imports = [ ./steam ];
+  imports = [ ./gaming ];
 
   home-manager.sharedModules = [
     (import ./discord)
@@ -11,7 +11,7 @@
     (import ./opencode)
     (import ./vscodium)
     ({ pkgs, ... }: {
-      home.packages = with pkgs; [ mullvad-vpn vscode ];
+      home.packages = with pkgs; [ mullvad-vpn ];
       programs.zathura.enable = true;
     })
   ];

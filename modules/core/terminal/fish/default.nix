@@ -9,6 +9,7 @@
       set fish_greeting
       nitch
       ${pkgs.zoxide}/bin/zoxide init fish | source
+      ${pkgs.starship}/bin/starship init fish | source
     '';
     shellAliases = {
 

@@ -9,27 +9,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, ... }@attrs:
   let
     system = "x86_64-linux";
-    username = "charlie";
-    hostName = "desktop";
-    DE = "awesome";
+
   in {
     nixosConfigurations.nixos-desktop = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit system username hostName DE; };
-      modules = [
-        ./hosts/desktop/default.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit username; };
-          home-manager.users.${username} = import ./users/${username}/home.nix;
-          home-manager.backupFileExtension = "bak";
-        }
-      ];
+      specialArgs = {
+        username = "charlie";
+        hostName = "desktop";
+        DE = "awesome";
+       inherit system;
+       } //attrs;
+      modules = [./.];
     };
     templates.default = {
       path = ./.;
