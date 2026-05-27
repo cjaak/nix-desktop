@@ -51,21 +51,31 @@ local modkey = "Mod4"
 
 beautiful.useless_gap = 3
 beautiful.gap_single_client = true
-local primary_screen = screen.primary
-awful.screen.padding(primary_screen, {
+local function find_screen_by_output(name)
+    for s in screen do
+        if s.outputs[name] then return s end
+    end
+end
+
+awful.screen.padding(screen.primary, {
     top = 42,
     left = 8,
     right = 8,
     bottom = 42
 })
-if screen[2] then
-    awful.screen.padding(screen[2], {
-        top = 8,
-        left = 8,
-        right = 8,
-        bottom = 42
-    })
+
+for _, output in ipairs({ "DP-5", "HDMI-0" }) do
+    local s = find_screen_by_output(output)
+    if s then
+        awful.screen.padding(s, {
+            top = 8,
+            left = 8,
+            right = 8,
+            bottom = 42
+        })
+    end
 end
+
 
 -- -----------------------------------------------------------------------------
 -- Keybinds.
