@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gamecontroller configversion="19" appversion="2.23">
+<gamecontroller configversion="19" appversion="3.5.1">
     <!--The SDL name for a joystick is included for informational purposes only.-->
-    <sdlname>XInput Controller</sdlname>
-    <!--The GUID for a joystick is included for informational purposes only.-->
-    <guid>78696e70757401000000000000000000</guid>
-    <names/>
+    <sdlname>Xbox 360 Controller</sdlname>
+    <!--The Unique ID for a joystick is included for informational purposes only.-->
+    <uniqueID>030081b85e0400008e020000140100001118654</uniqueID>
+    <stickAxisAssociation index="1" xAxis="1" yAxis="2"/>
+    <stickAxisAssociation index="2" xAxis="3" yAxis="4"/>
+    <vdpadButtonAssociations index="1">
+        <vdpadButtonAssociation axis="0" button="12" direction="1"/>
+        <vdpadButtonAssociation axis="0" button="13" direction="4"/>
+        <vdpadButtonAssociation axis="0" button="14" direction="8"/>
+        <vdpadButtonAssociation axis="0" button="15" direction="2"/>
+    </vdpadButtonAssociations>
+    <names>
+        <controlstickname index="1">Stick 1</controlstickname>
+        <controlstickname index="2">Stick 2</controlstickname>
+    </names>
     <sets>
         <set index="1">
             <stick index="1">
-                <deadZone>3786</deadZone>
+                <deadZone>13087</deadZone>
                 <maxZone>30017</maxZone>
-                <diagonalRange>71</diagonalRange>
                 <stickbutton index="1">
                     <slots>
                         <slot>
@@ -47,10 +57,10 @@
             <stick index="2">
                 <deadZone>308</deadZone>
             </stick>
-            <trigger index="1">
+            <trigger index="5">
                 <throttle>positivehalf</throttle>
             </trigger>
-            <trigger index="2">
+            <trigger index="6">
                 <throttle>positivehalf</throttle>
             </trigger>
             <button index="1">

@@ -38,11 +38,18 @@ end
 -- Init.
 
 awful.layout.layouts = {
-    awful.layout.suit.tile
+    awful.layout.suit.tile,
+    awful.layout.suit.tile.top,
 }
 
 awful.screen.connect_for_each_screen(function(s)
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }, s, awful.layout.layouts[1])
+    local layout
+    if s.outputs["HDMI-0"] then
+        layout = awful.layout.suit.tile.top
+    else
+        layout = awful.layout.suit.tile
+    end
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }, s, layout)
 end)
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
@@ -230,7 +237,7 @@ awful.rules.rules = {
             maximized            = false,
             sticky               = false,
             fullscreen           = false,
-            size_hint_honor      = true,
+            size_hints_honor     = false,
         }
     },
     {

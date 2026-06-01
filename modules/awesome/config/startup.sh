@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 pkill polybar
+pkill dunst
+
+xinput set-prop "SteelSeries SteelSeries Aerox 9 Wireless" "libinput Middle Emulation Enabled" 0 2>/dev/null || true
+
+dunst &
 
 (
     ~/.scripts/screenlayout/default.sh
@@ -8,5 +13,3 @@ pkill polybar
     picom -b
     ~/.config/polybar/launch.sh
 ) &
-
-dunstctl set-paused true
