@@ -1,8 +1,9 @@
-{ DE, ... }:
+{ DE ? null, lib, ... }:
 {
   imports = [
-    ./apps
     ./core
+  ] ++ lib.optionals (DE != null) [
+    ./apps
     ./hardware
     ./virt
     ./${DE}

@@ -1,7 +1,8 @@
-{ ... }: {
+{ DE ? null, lib, ... }: {
   imports = [
-    ./boot/systemd
     ./nix
+  ] ++ lib.optionals (DE != null) [
+    ./boot/systemd
     ./terminal
   ];
 }
