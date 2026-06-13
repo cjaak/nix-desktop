@@ -81,6 +81,13 @@
    age.secrets.jellyseerrApiKey = lib.mkDefault {
    file = ./jellyseerrApiKey.age;
    };
+  age.secrets.invidiousConfig = lib.mkDefault {
+    file = ./invidious-config.age;
+    mode = "0444";
+  };
+  age.secrets.invidiousCompanionKey = lib.mkDefault {
+    file = ./invidious-companion-key.age;
+  };
   # age.secrets.duckDNSDomain = lib.mkDefault {
   #     file = ./duckDNSDomain.age;
   #     };

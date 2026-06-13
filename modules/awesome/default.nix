@@ -58,6 +58,7 @@
     xfce.thunar
     xfce.tumbler
     xfce.thunar-volman
+    pavucontrol
   ];
 
   services.gnome.gnome-keyring.enable = true;

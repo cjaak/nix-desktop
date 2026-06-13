@@ -16,5 +16,6 @@
      ./nextcloud
      ./filebrowser
      ./rreading-glasses
+     ./redirects
   ];
 }

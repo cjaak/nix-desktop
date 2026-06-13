@@ -31,4 +31,6 @@ in {
   "jellyseerrApiKey.age".publicKeys = allKeys;
   "duckDNSDomain.age".publicKeys = allKeys;
   "duckDNSToken.age".publicKeys = allKeys;
+  "invidious-config.age".publicKeys = allKeys;
+  "invidious-companion-key.age".publicKeys = allKeys;
 }

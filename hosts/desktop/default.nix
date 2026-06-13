@@ -1,11 +1,14 @@
-{ hostName, username, system, deploy-rs, ... }: {
+{ hostName, username, system, deploy-rs, agenix, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
 
   system.stateVersion = "25.11";
 
-  environment.systemPackages = [ deploy-rs.packages.${system}.default ];
+  environment.systemPackages = [
+    deploy-rs.packages.${system}.default
+    agenix.packages.${system}.default
+  ];
 
   services.samba = {
     enable = true;

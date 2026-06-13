@@ -117,9 +117,24 @@ in {
   ];
 
   home-manager.sharedModules = [
-    ({ ... }: {
-      home.file.".config/antimicrox/antimicrox_settings.ini".source = ./antimicrox_settings.ini;
+    ({ lib, ... }: {
       home.file.".config/antimicrox/standard4arrowkeys.gamecontroller.amgp".source = ./standard4arrowkeys.gamecontroller.amgp;
+
+      home.activation.antimicroxSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        _cfg="$HOME/.config/antimicrox/antimicrox_settings.ini"
+        if [ ! -f "$_cfg" ] || [ -L "$_cfg" ]; then
+          rm -f "$_cfg"
+          cat > "$_cfg" << 'EOF'
+[General]
+DisplayNames=0
+LastProfileDir=/home/charlie/.config/antimicrox
+
+[Controllers]
+Controller03002a52de000000545700001101000022222356ConfigFile1=/home/charlie/.config/antimicrox/standard4arrowkeys.gamecontroller.amgp
+Controller03002a52de000000545700001101000022222356LastSelected=/home/charlie/.config/antimicrox/standard4arrowkeys.gamecontroller.amgp
+EOF
+        fi
+      '';
     })
   ];
 }

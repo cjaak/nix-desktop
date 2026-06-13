@@ -11,7 +11,6 @@
     ghostty
     mods
     nitch
-    pavucontrol
     playerctl
     ripgrep
     todoist-electron
