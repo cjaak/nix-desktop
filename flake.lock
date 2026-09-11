@@ -168,14 +168,16 @@
     "jovian-nixos": {
       "inputs": {
         "nix-github-actions": "nix-github-actions",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
       },
       "locked": {
-        "lastModified": 1789025860,
-        "narHash": "sha256-FPpP0X2gLkd7OCvzD4QSFqYEJ1hBw9H6FtAYwmQCj18=",
+        "lastModified": 1789150899,
+        "narHash": "sha256-uTHtIAZMi16LmPWB2wEdOuulMSbDzXAIoTe2lB6AMJQ=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "6087aab8ab19bc314bbe132c6f3114a85d772375",
+        "rev": "1d3ea3cb0aa757316468105748f514fdb92b669d",
         "type": "github"
       },
       "original": {
@@ -260,22 +262,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1787498568,
-        "narHash": "sha256-9i/VTdusq/+NM/tz+J1Re+ojkMB8MBf0QshnYfzHz30=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "56c02bc00adcf003215cc4bd996d6efaf4cff188",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1779487870,
         "narHash": "sha256-ExNewRUgNSkz/HfnKVK0CL9PyMtwYsDevByGMS51zzQ=",
         "owner": "nixos",
@@ -335,7 +321,7 @@
         "home-manager-unstable": "home-manager-unstable",
         "jovian-nixos": "jovian-nixos",
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "recyclarr-configs": "recyclarr-configs"
