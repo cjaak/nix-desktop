@@ -1,8 +1,9 @@
-{ pkgs, username, nur, ... }: {
+{ pkgs, username, nur, nixpkgs-unstable, system, ... }: {
 
   nixpkgs.overlays = [
     (final: prev: {
       nur = import nur { nurpkgs = prev; pkgs = prev; };
+      bambu-studio = (import nixpkgs-unstable { inherit system; config.allowUnfree = true; }).bambu-studio;
     })
   ];
 

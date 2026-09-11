@@ -94,9 +94,8 @@ local globalkeys = gears.table.join(
     awful.key({ modkey, }, "s", function() awful.spawn("/home/charlie/.config/rofi/tmux.sh") end),
     awful.key({ modkey, }, "b", function() awful.spawn("firefox") end),
     awful.key({ modkey, }, "Tab", function() awful.spawn("/home/charlie/.config/rofi/window.sh") end),
-    -- HACK: Seems to be a bug in flameshot.
     awful.key({ modkey, "Shift" }, "s",
-        function() awful.spawn("bash -c 'flameshot gui -r | xclip -selection clipboard -t image/png'") end),
+        function() awful.spawn("bash -c 'maim -s | xclip -selection clipboard -t image/png'") end),
     awful.key({ modkey, }, "m", function() awful.spawn("/home/charlie/.config/polybar/scripts/dunst.sh") end),
     awful.key({ modkey, }, "n", function() awful.spawn("dunstctl close-all") end),
     awful.key({ modkey, }, "-", function() awful.spawn("/home/charlie/.config/MangoHud/modify_fps_cap.sh -10") end),
@@ -259,6 +258,7 @@ awful.rules.rules = {
         properties = { floating = true },
         callback = awful.placement.centered
     },
+
 }
 
 client.connect_signal("manage", function(c)

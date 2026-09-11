@@ -20,7 +20,7 @@
     spice-gtk
     spice-protocol
     virt-viewer
-    #virtio-win
+    virtio-win
     #win-spice
   ];
   programs.virt-manager.enable = true;

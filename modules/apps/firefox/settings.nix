@@ -58,5 +58,11 @@
   "services.sync.prefs.sync.browser.urlbar.suggest.searches" = false;
 
   "browser.search.suggest.enabled" = false;
+
+  # Remember logged-in accounts across sessions
+  "privacy.sanitize.sanitizeOnShutdown" = false;
+  "privacy.clearOnShutdown.cookies" = false;
+  "privacy.clearOnShutdown.sessions" = false;
+  "network.cookie.lifetimePolicy" = 0;
 }
 

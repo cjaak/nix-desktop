@@ -2,6 +2,7 @@
 
 pkill polybar
 pkill dunst
+pkill picom
 
 xinput set-prop "SteelSeries SteelSeries Aerox 9 Wireless" "libinput Middle Emulation Enabled" 0 2>/dev/null || true
 

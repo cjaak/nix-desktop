@@ -1,5 +1,6 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ flameshot xclip ];
+  home.packages = with pkgs; [ flameshot xclip maim ];
+  home.file."Pictures/.keep".text = "";
   home.file.".config/flameshot/flameshot.ini".text = ''
     [General]
     buttons=@Invalid()

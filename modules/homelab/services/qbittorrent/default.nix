@@ -18,6 +18,7 @@ directories = [
 {
   systemd.tmpfiles.rules = map (x: "d ${x} 0777 share share - -") directories;
   virtualisation.oci-containers = {
+  i
     containers = {
       sabnzbd = {
         image = "lscr.io/linuxserver/sabnzbd:latest";

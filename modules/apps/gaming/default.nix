@@ -72,10 +72,10 @@ let
 
   baras = pkgs.appimageTools.wrapType2 {
     pname = "baras";
-    version = "2026.5.13";
+    version = "2026.8.9";
     src = pkgs.fetchurl {
-      url = "https://github.com/baras-app/baras/releases/download/v2026.5.13/BARAS_2026.5.13_amd64.AppImage";
-      hash = "sha256-DZkWtTia8mbdT48xAmVf/HNeVSOTPaiJPnn9d4k5s+E=";
+      url = "https://github.com/baras-app/baras/releases/download/v2026.8.9/BARAS_2026.8.9_amd64.AppImage";
+      hash = "sha256-nleE8PVjQhmxSYmmVE9xfEa1unxV+zARpWxzbfpJZDY=";
     };
     extraInstallCommands =
       let
@@ -105,15 +105,19 @@ in {
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
   programs.gamemode.enable = true;
+  services.flatpak.enable = true;
   environment.systemPackages = with pkgs; [
     gamescope
     mangohud
     antimicrox
-    bottles
     lutris
+    heroic
     wine
     baras
+    parsec-bin
+    xclicker
     starparse
+    prismlauncher
   ];
 
   home-manager.sharedModules = [
