@@ -24,6 +24,7 @@
     enable = true;
     autoStart = true;
     user = username;
+    desktopSession = "gamescope-wayland";
   };
 
   services.pipewire = {
