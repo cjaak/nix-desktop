@@ -25,7 +25,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
     };
     deploy-rs.url = "github:serokell/deploy-rs";
-    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
+    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS/6087aab8ab19bc314bbe132c6f3114a85d772375";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, deploy-rs, jovian-nixos, ... }@attrs:
@@ -33,17 +33,6 @@
     system = "x86_64-linux";
 
   in {
-    deploy.nodes.nixos-console = {
-      hostname = "192.168.178.20";
-      magicRollback = false;
-      profiles.system = {
-        sshUser = "charlie";
-        user = "root";
-        remoteBuild = false;
-        path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.nixos-console;
-      };
-    };
-
     deploy.nodes.nixos-server = {
       hostname = "192.168.178.59";
       magicRollback = false;

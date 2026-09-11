@@ -1,4 +1,4 @@
-{ pkgs, lib, username, system, deploy-rs, ... }: {
+{ pkgs, lib, username, ... }: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -40,6 +40,11 @@
     settings.PasswordAuthentication = false;
   };
 
+  nix.settings = {
+    substituters = [ "https://jovian.cachix.org" ];
+    trusted-public-keys = [ "jovian.cachix.org-1:MEf8Kz4R5VC14bRqCuLtP1I3JmHqSByXjANJ/xpVNM8=" ];
+  };
+
   home-manager.users.${username}.home.enableNixpkgsReleaseCheck = false;
 
   users.users.${username}.openssh.authorizedKeys.keys = [
@@ -52,6 +57,5 @@
   environment.systemPackages = with pkgs; [
     wget
     htop
-    deploy-rs.packages.${system}.default
   ];
 }
