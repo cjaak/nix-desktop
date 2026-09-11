@@ -40,6 +40,8 @@
     settings.PasswordAuthentication = false;
   };
 
+  home-manager.users.${username}.home.enableNixpkgsReleaseCheck = false;
+
   users.users.${username}.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwCrkUq76rnolIfL8eApseG7rlmxCWDlqPx2Xti/fYH chwiegand@proton.me"
   ];
