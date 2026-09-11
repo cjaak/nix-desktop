@@ -25,9 +25,10 @@
             inputs.nixpkgs.follows = "nixpkgs";
     };
     deploy-rs.url = "github:serokell/deploy-rs";
+    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
 
-  outputs = { self, nixpkgs, deploy-rs, ... }@attrs:
+  outputs = { self, nixpkgs, deploy-rs, jovian-nixos, ... }@attrs:
   let
     system = "x86_64-linux";
 
@@ -71,6 +72,19 @@
             ./modules/agenix
          ];
       };
+       nixos-console = nixpkgs.lib.nixosSystem {
+         inherit system;
+         specialArgs = {
+           username = "charlie";
+           hostName = "console";
+           DE = null;
+           inherit system;
+         } // attrs;
+         modules = [
+           ./.
+           jovian-nixos.nixosModules.default
+         ];
+       };
     };
     templates.default = {
       path = ./.;
