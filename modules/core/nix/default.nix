@@ -26,7 +26,7 @@
 
       users.${username} = {
         home.homeDirectory = "/home/${username}";
-        home.stateVersion = pkgs.lib.trivial.release;
+        home.stateVersion = "25.11";
       };
     };
 
