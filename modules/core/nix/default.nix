@@ -1,6 +1,6 @@
-{ pkgs, username, nur, nixpkgs-unstable, system, ... }: {
+{ pkgs, username, nur, nixpkgs-unstable, system, DE ? null, lib, ... }: {
 
-  nixpkgs.overlays = [
+  nixpkgs.overlays = lib.optionals (DE != null) [
     (final: prev: {
       nur = import nur { nurpkgs = prev; pkgs = prev; };
       bambu-studio = (import nixpkgs-unstable { inherit system; config.allowUnfree = true; }).bambu-studio;
@@ -25,9 +25,8 @@
       useGlobalPkgs = true;
 
       users.${username} = {
-        # The home.stateVersion option does not have a default and must be set
         home.homeDirectory = "/home/${username}";
-        home.stateVersion = "25.11";
+        home.stateVersion = pkgs.lib.trivial.release;
       };
     };
 
