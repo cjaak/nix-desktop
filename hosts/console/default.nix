@@ -15,6 +15,12 @@
     networkmanager.enable = true;
   };
 
+  fileSystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/3a4832d5-1b9e-44b1-9b6c-bbfbf42305f9";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" ];
+  };
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
