@@ -26,9 +26,13 @@
     };
     deploy-rs.url = "github:serokell/deploy-rs";
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, deploy-rs, jovian-nixos, ... }@attrs:
+  outputs = { self, nixpkgs, deploy-rs, jovian-nixos, home-manager-unstable, ... }@attrs:
   let
     system = "x86_64-linux";
 
@@ -90,7 +94,9 @@
            hostName = "console";
            DE = null;
            inherit system;
-         } // attrs;
+         } // attrs // {
+           home-manager = home-manager-unstable;
+         };
          modules = [
            ./.
            jovian-nixos.nixosModules.default
