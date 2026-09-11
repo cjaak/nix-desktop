@@ -72,7 +72,7 @@
             ./modules/agenix
          ];
       };
-       nixos-console = nixpkgs.lib.nixosSystem {
+       nixos-console = jovian-nixos.inputs.nixpkgs.lib.nixosSystem {
          inherit system;
          specialArgs = {
            username = "charlie";
