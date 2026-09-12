@@ -8,22 +8,32 @@ let
     name = "gl-kickstart";
     src = pkgs.writeText "main.c" ''
       #include <X11/Xlib.h>
-      #include <GL/glx.h>
-      #include <GL/gl.h>
       #include <unistd.h>
+
+      /* Declare GLX without glx.h to avoid header path issues */
+      typedef struct __GLXcontextRec *GLXContext;
+      typedef unsigned long GLXDrawable;
+      #define GLX_RGBA         4
+      #define GLX_DOUBLEBUFFER 5
+      #define GL_COLOR_BUFFER_BIT 0x4000
+
+      extern XVisualInfo *glXChooseVisual(Display*, int, int*);
+      extern GLXContext   glXCreateContext(Display*, XVisualInfo*, GLXContext, int);
+      extern int          glXMakeCurrent(Display*, GLXDrawable, GLXContext);
+      extern void         glXSwapBuffers(Display*, GLXDrawable);
+      extern void         glClear(unsigned int);
 
       int main(int argc, char **argv) {
         Display *dpy = XOpenDisplay(NULL);
         if (dpy) {
-          int attrs[] = { GLX_RGBA, GLX_DOUBLEBUFFER, None };
+          int attrs[] = { GLX_RGBA, GLX_DOUBLEBUFFER, 0 };
           XVisualInfo *vi = glXChooseVisual(dpy, DefaultScreen(dpy), attrs);
           if (vi) {
-            GLXContext ctx = glXCreateContext(dpy, vi, NULL, GL_TRUE);
+            GLXContext ctx = glXCreateContext(dpy, vi, NULL, 1);
             if (ctx) {
-              Colormap cmap = XCreateColormap(
-                dpy, RootWindow(dpy, vi->screen), vi->visual, AllocNone);
               XSetWindowAttributes swa;
-              swa.colormap = cmap;
+              swa.colormap = XCreateColormap(
+                dpy, RootWindow(dpy, vi->screen), vi->visual, AllocNone);
               Window win = XCreateWindow(
                 dpy, RootWindow(dpy, vi->screen),
                 0, 0, 1, 1, 0, vi->depth, InputOutput, vi->visual,
@@ -44,7 +54,7 @@ let
         return 0;
       }
     '';
-    buildInputs = with pkgs; [ libx11 libGL mesa.dev ];
+    buildInputs = with pkgs; [ libx11 libGL ];
     unpackPhase = "true";
     buildPhase = "$CC $src -lX11 -lGL -o gl-kickstart";
     installPhase = "mkdir -p $out/bin && cp gl-kickstart $out/bin/";
