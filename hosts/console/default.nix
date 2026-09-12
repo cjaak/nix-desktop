@@ -84,6 +84,8 @@
 
   home-manager.users.${username}.home.enableNixpkgsReleaseCheck = false;
 
+  users.users.${username}.extraGroups = [ "input" ];
+
   users.users.${username}.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwCrkUq76rnolIfL8eApseG7rlmxCWDlqPx2Xti/fYH chwiegand@proton.me"
   ];
@@ -116,10 +118,12 @@
       inputstream-adaptive
       inputstreamhelper
       netflix
+      joystick
+      controller-topology-project
     ]))
     (writeShellScriptBin "kodi-streaming" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${kodi-wayland.withPackages (p: with p; [ jellycon inputstream-adaptive inputstreamhelper netflix ])}/bin/kodi
+      ${kodi-wayland.withPackages (p: with p; [ jellycon inputstream-adaptive inputstreamhelper netflix joystick controller-topology-project ])}/bin/kodi
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "disney-plus" ''
