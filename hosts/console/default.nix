@@ -121,6 +121,7 @@
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
+      export DISPLAY="''${DISPLAY:-:0}"
       exec ${google-chrome}/bin/google-chrome-stable \
         --ozone-platform=x11 \
         --app=https://nebula.tv \
@@ -130,6 +131,7 @@
         --user-data-dir="$HOME/.config/chrome-nebula"
     '')
     (writeShellScriptBin "disney-plus" ''
+      export DISPLAY="''${DISPLAY:-:0}"
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${google-chrome}/bin/google-chrome-stable \
         --ozone-platform=x11 \
