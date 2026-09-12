@@ -44,7 +44,7 @@ let
         return 0;
       }
     '';
-    buildInputs = with pkgs; [ xorg.libX11 mesa ];
+    buildInputs = with pkgs; [ libx11 libGL mesa.dev ];
     unpackPhase = "true";
     buildPhase = "$CC $src -lX11 -lGL -o gl-kickstart";
     installPhase = "mkdir -p $out/bin && cp gl-kickstart $out/bin/";
