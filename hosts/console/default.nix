@@ -38,6 +38,22 @@
     user = username;
   };
 
+  systemd.user.services.steamwebhelper-debug-patch = {
+    description = "Enable CEF remote debugging in steamwebhelper for Decky Loader";
+    wantedBy = [ "steam-launcher.service" ];
+    before = [ "steam-launcher.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "patch-steamwebhelper" ''
+        wrap="$HOME/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh"
+        if [ -f "$wrap" ] && ! grep -q -- "--remote-debugging-port" "$wrap"; then
+          sed -i 's|^exec \./steamwebhelper |exec ./steamwebhelper --remote-debugging-port=8080 |' "$wrap"
+        fi
+      '';
+    };
+  };
+
   services.udisks2.enable = true;
 
   services.pipewire = {
