@@ -38,8 +38,6 @@
     user = username;
   };
 
-  home-manager.users.${username}.home.file.".steam/steam/.cef-enable-remote-debugging".text = "";
-
   services.udisks2.enable = true;
 
   services.pipewire = {
@@ -68,7 +66,10 @@
     trusted-public-keys = [ "jovian.cachix.org-1:MEf8Kz4R5VC14bRqCuLtP1I3JmHqSByXjANJ/xpVNM8=" ];
   };
 
-  home-manager.users.${username}.home.enableNixpkgsReleaseCheck = false;
+  home-manager.users.${username} = {
+    home.enableNixpkgsReleaseCheck = false;
+    home.file.".steam/steam/.cef-enable-remote-debugging".text = "";
+  };
 
   users.users.${username} = {
     extraGroups = [ "input" ];
