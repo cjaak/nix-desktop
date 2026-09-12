@@ -122,7 +122,7 @@
     '')
     (writeShellScriptBin "nebula" ''
       exec ${google-chrome}/bin/google-chrome-stable \
-        --ozone-platform=wayland \
+        --ozone-platform=x11 \
         --app=https://nebula.tv \
         --start-fullscreen \
         --no-first-run \
@@ -132,7 +132,7 @@
     (writeShellScriptBin "disney-plus" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${google-chrome}/bin/google-chrome-stable \
-        --ozone-platform=wayland \
+        --ozone-platform=x11 \
         --app=https://www.disneyplus.com \
         --start-fullscreen \
         --no-first-run \
