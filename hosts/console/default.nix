@@ -38,38 +38,7 @@
     user = username;
   };
 
-  systemd.user.services.steamwebhelper-debug-patch = {
-    description = "Enable CEF remote debugging in steamwebhelper for Decky Loader";
-    wantedBy = [ "default.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = pkgs.writeShellScript "patch-steamwebhelper" ''
-        sleep 10
-        ${pkgs.python3}/bin/python3 - <<'PYEOF'
-        import os, sys
-        wrap = os.path.expanduser(
-            "~/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh")
-        if not os.path.exists(wrap): sys.exit(0)
-        text = open(wrap).read()
-        if '--remote-debugging-port' in text: sys.exit(0)
-        orig = len(text)
-        new = text.replace(
-            'exec ./steamwebhelper "$@"',
-            'exec ./steamwebhelper --remote-debugging-port=8080 "$@"')
-        delta = len(new) - orig
-        marker = '# current gdbserver against steamwebhelper is not stable, do not use\n'
-        if delta > 0 and marker in new:
-          new = new.replace(marker, marker[:len(marker)-delta-1] + '\n', 1)
-        assert len(new) == orig, f"size {len(new)} != {orig}"
-        open(wrap, 'w').write(new)
-        import subprocess
-        subprocess.run(['killall', 'steamwebhelper'], capture_output=True)
-        print(f"patched ({orig} bytes), restarted steamwebhelper")
-        PYEOF
-      '';
-    };
-  };
+  home-manager.users.${username}.home.file.".steam/steam/.cef-enable-remote-debugging".text = "";
 
   services.udisks2.enable = true;
 
