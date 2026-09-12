@@ -84,11 +84,12 @@
 
   home-manager.users.${username}.home.enableNixpkgsReleaseCheck = false;
 
-  users.users.${username}.extraGroups = [ "input" ];
-
-  users.users.${username}.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwCrkUq76rnolIfL8eApseG7rlmxCWDlqPx2Xti/fYH chwiegand@proton.me"
-  ];
+  users.users.${username} = {
+    extraGroups = [ "input" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwCrkUq76rnolIfL8eApseG7rlmxCWDlqPx2Xti/fYH chwiegand@proton.me"
+    ];
+  };
 
   systemd.services.wg-quick-wg0.wantedBy = lib.mkForce [];
 
