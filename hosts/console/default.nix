@@ -45,6 +45,7 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "patch-steamwebhelper" ''
+        sleep 10
         ${pkgs.python3}/bin/python3 - <<'PYEOF'
         import os, sys
         wrap = os.path.expanduser(
@@ -62,7 +63,9 @@
           new = new.replace(marker, marker[:len(marker)-delta-1] + '\n', 1)
         assert len(new) == orig, f"size {len(new)} != {orig}"
         open(wrap, 'w').write(new)
-        print(f"patched ({orig} bytes)")
+        import subprocess
+        subprocess.run(['killall', 'steamwebhelper'], capture_output=True)
+        print(f"patched ({orig} bytes), restarted steamwebhelper")
         PYEOF
       '';
     };
