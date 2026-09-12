@@ -121,25 +121,11 @@
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
-      exec ${google-chrome}/bin/google-chrome-stable \
-        --ozone-platform=x11 \
-        --use-gl=desktop \
-        --app=https://nebula.tv \
-        --start-fullscreen \
-        --no-first-run \
-        --no-default-browser-check \
-        --user-data-dir="$HOME/.config/chrome-nebula"
+      exec ${pkgs.firefox-bin}/bin/firefox --kiosk https://nebula.tv
     '')
     (writeShellScriptBin "disney-plus" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${google-chrome}/bin/google-chrome-stable \
-        --ozone-platform=x11 \
-        --use-gl=desktop \
-        --app=https://www.disneyplus.com \
-        --start-fullscreen \
-        --no-first-run \
-        --no-default-browser-check \
-        --user-data-dir="$HOME/.config/chrome-disney-plus"
+      ${pkgs.firefox-bin}/bin/firefox --kiosk https://www.disneyplus.com
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
   ];
