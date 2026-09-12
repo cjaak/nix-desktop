@@ -1,4 +1,56 @@
-{ pkgs, lib, username, ... }: {
+{ pkgs, lib, username, ... }:
+let
+  # Renders one GLX frame on the current DISPLAY then exec's the given command.
+  # Gamescope auto-enables display when it receives a DRI3 hardware frame from
+  # the XWayland window — this is how Kodi works. Browsers never trigger that
+  # because they render via EGL in a GPU subprocess. This binary forces it.
+  glKickstart = pkgs.stdenv.mkDerivation {
+    name = "gl-kickstart";
+    src = pkgs.writeText "main.c" ''
+      #include <X11/Xlib.h>
+      #include <GL/glx.h>
+      #include <GL/gl.h>
+      #include <unistd.h>
+
+      int main(int argc, char **argv) {
+        Display *dpy = XOpenDisplay(NULL);
+        if (dpy) {
+          int attrs[] = { GLX_RGBA, GLX_DOUBLEBUFFER, None };
+          XVisualInfo *vi = glXChooseVisual(dpy, DefaultScreen(dpy), attrs);
+          if (vi) {
+            GLXContext ctx = glXCreateContext(dpy, vi, NULL, GL_TRUE);
+            if (ctx) {
+              Colormap cmap = XCreateColormap(
+                dpy, RootWindow(dpy, vi->screen), vi->visual, AllocNone);
+              XSetWindowAttributes swa;
+              swa.colormap = cmap;
+              Window win = XCreateWindow(
+                dpy, RootWindow(dpy, vi->screen),
+                0, 0, 1, 1, 0, vi->depth, InputOutput, vi->visual,
+                CWColormap, &swa);
+              XMapWindow(dpy, win);
+              XFlush(dpy);
+              glXMakeCurrent(dpy, win, ctx);
+              glClear(GL_COLOR_BUFFER_BIT);
+              glXSwapBuffers(dpy, win);
+              XSync(dpy, False);
+              usleep(200000);
+            }
+            XFree(vi);
+          }
+          XCloseDisplay(dpy);
+        }
+        if (argc > 1) execvp(argv[1], argv + 1);
+        return 0;
+      }
+    '';
+    buildInputs = with pkgs; [ xorg.libX11 mesa ];
+    unpackPhase = "true";
+    buildPhase = "$CC $src -lX11 -lGL -o gl-kickstart";
+    installPhase = "mkdir -p $out/bin && cp gl-kickstart $out/bin/";
+  };
+in
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -121,13 +173,11 @@
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
-      unset GAMESCOPE_DISPLAY_DISABLED
-      exec ${pkgs.firefox-bin}/bin/firefox --kiosk https://nebula.tv
+      exec ${glKickstart}/bin/gl-kickstart ${pkgs.firefox-bin}/bin/firefox --kiosk https://nebula.tv
     '')
     (writeShellScriptBin "disney-plus" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      unset GAMESCOPE_DISPLAY_DISABLED
-      ${pkgs.firefox-bin}/bin/firefox --kiosk https://www.disneyplus.com
+      ${glKickstart}/bin/gl-kickstart ${pkgs.firefox-bin}/bin/firefox --kiosk https://www.disneyplus.com
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
   ];
