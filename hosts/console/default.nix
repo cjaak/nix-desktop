@@ -121,10 +121,12 @@
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
+      unset GAMESCOPE_DISPLAY_DISABLED
       exec ${pkgs.firefox-bin}/bin/firefox --kiosk https://nebula.tv
     '')
     (writeShellScriptBin "disney-plus" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
+      unset GAMESCOPE_DISPLAY_DISABLED
       ${pkgs.firefox-bin}/bin/firefox --kiosk https://www.disneyplus.com
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
