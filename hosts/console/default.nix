@@ -121,10 +121,9 @@
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
-      env > /tmp/nebula-env.txt
-      ls /tmp/.X11-unix/ >> /tmp/nebula-env.txt 2>&1
       exec ${google-chrome}/bin/google-chrome-stable \
         --ozone-platform=x11 \
+        --in-process-gpu \
         --app=https://nebula.tv \
         --start-fullscreen \
         --no-first-run \
@@ -132,11 +131,12 @@
         --user-data-dir="$HOME/.config/chrome-nebula"
     '')
     (writeShellScriptBin "disney-plus" ''
-      export WAYLAND_DISPLAY=gamescope-0
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${gamescope}/bin/gamescope -e -f -- ${google-chrome}/bin/google-chrome-stable \
-        --ozone-platform=wayland \
+      ${google-chrome}/bin/google-chrome-stable \
+        --ozone-platform=x11 \
+        --in-process-gpu \
         --app=https://www.disneyplus.com \
+        --start-fullscreen \
         --no-first-run \
         --no-default-browser-check \
         --user-data-dir="$HOME/.config/chrome-disney-plus"
