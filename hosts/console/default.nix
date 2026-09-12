@@ -121,10 +121,12 @@
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
-      export WAYLAND_DISPLAY=gamescope-0
-      exec ${gamescope}/bin/gamescope -e -f -- ${google-chrome}/bin/google-chrome-stable \
-        --ozone-platform=wayland \
+      env > /tmp/nebula-env.txt
+      ls /tmp/.X11-unix/ >> /tmp/nebula-env.txt 2>&1
+      exec ${google-chrome}/bin/google-chrome-stable \
+        --ozone-platform=x11 \
         --app=https://nebula.tv \
+        --start-fullscreen \
         --no-first-run \
         --no-default-browser-check \
         --user-data-dir="$HOME/.config/chrome-nebula"
