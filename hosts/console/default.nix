@@ -118,13 +118,25 @@
       inputstream-adaptive
       inputstreamhelper
       netflix
+      youtube
+      sponsorblock
       joystick
       controller-topology-project
     ]))
     (writeShellScriptBin "kodi-streaming" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${kodi-wayland.withPackages (p: with p; [ jellycon inputstream-adaptive inputstreamhelper netflix joystick controller-topology-project ])}/bin/kodi
+      ${kodi-wayland.withPackages (p: with p; [
+        jellycon inputstream-adaptive inputstreamhelper netflix
+        youtube sponsorblock joystick controller-topology-project
+      ])}/bin/kodi
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
+    '')
+    (writeShellScriptBin "nebula" ''
+      exec ${google-chrome}/bin/google-chrome-stable \
+        --app=https://nebula.tv \
+        --start-fullscreen \
+        --no-first-run \
+        --no-default-browser-check
     '')
     (writeShellScriptBin "disney-plus" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
