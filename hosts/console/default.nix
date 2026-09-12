@@ -38,13 +38,16 @@
     user = username;
   };
 
+  systemd.user.paths.steamwebhelper-debug-patch = {
+    wantedBy = [ "default.target" ];
+    pathConfig.PathChanged = "%h/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh";
+  };
+
   systemd.user.services.steamwebhelper-debug-patch = {
     description = "Enable CEF remote debugging in steamwebhelper for Decky Loader";
-    wantedBy = [ "steam-launcher.service" ];
-    before = [ "steam-launcher.service" ];
+    wantedBy = [ "default.target" ];
     serviceConfig = {
       Type = "oneshot";
-      RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "patch-steamwebhelper" ''
         wrap="$HOME/.local/share/Steam/ubuntu12_64/steamwebhelper_sniper_wrap.sh"
         if [ -f "$wrap" ] && ! grep -q -- "--remote-debugging-port" "$wrap"; then
