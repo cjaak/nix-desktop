@@ -123,7 +123,7 @@
     (writeShellScriptBin "nebula" ''
       exec ${google-chrome}/bin/google-chrome-stable \
         --ozone-platform=x11 \
-        --in-process-gpu \
+        --use-gl=desktop \
         --app=https://nebula.tv \
         --start-fullscreen \
         --no-first-run \
@@ -134,7 +134,7 @@
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${google-chrome}/bin/google-chrome-stable \
         --ozone-platform=x11 \
-        --in-process-gpu \
+        --use-gl=desktop \
         --app=https://www.disneyplus.com \
         --start-fullscreen \
         --no-first-run \
