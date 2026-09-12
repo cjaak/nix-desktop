@@ -11,7 +11,7 @@
     (import ./opencode)
     (import ./vscodium)
     ({ pkgs, ... }: {
-      home.packages = with pkgs; [ mullvad-vpn bambu-studio ];
+      home.packages = with pkgs; [ mullvad-vpn bambu-studio google-chrome ];
       programs.zathura.enable = true;
     })
   ];
