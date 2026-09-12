@@ -33,7 +33,10 @@
     desktopSession = "gamescope-wayland";
   };
 
-  jovian.decky-loader.enable = true;
+  jovian.decky-loader = {
+    enable = true;
+    user = username;
+  };
 
   services.udisks2.enable = true;
 
