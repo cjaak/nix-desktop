@@ -8,6 +8,7 @@ let
     name = "gl-kickstart";
     src = pkgs.writeText "main.c" ''
       #include <X11/Xlib.h>
+      #include <X11/Xutil.h>
       #include <unistd.h>
 
       /* Declare GLX without glx.h to avoid header path issues */
