@@ -114,6 +114,7 @@
   environment.systemPackages = with pkgs; [
     wget
     htop
+    google-chrome
     (kodi-wayland.withPackages (p: with p; [
       jellycon
       inputstream-adaptive
@@ -134,18 +135,22 @@
     '')
     (writeShellScriptBin "nebula" ''
       exec ${google-chrome}/bin/google-chrome-stable \
+        --ozone-platform=wayland \
         --app=https://nebula.tv \
         --start-fullscreen \
         --no-first-run \
-        --no-default-browser-check
+        --no-default-browser-check \
+        --user-data-dir="$HOME/.config/chrome-nebula"
     '')
     (writeShellScriptBin "disney-plus" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${google-chrome}/bin/google-chrome-stable \
+        --ozone-platform=wayland \
         --app=https://www.disneyplus.com \
         --start-fullscreen \
         --no-first-run \
-        --no-default-browser-check
+        --no-default-browser-check \
+        --user-data-dir="$HOME/.config/chrome-disney-plus"
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
   ];
