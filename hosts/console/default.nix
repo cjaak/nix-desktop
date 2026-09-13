@@ -70,7 +70,7 @@ in
 
   virtualisation.waydroid.enable = true;
   boot.kernelModules = [ "binder_linux" ];
-  networking.nftables.enable = false;
+  networking.nftables.enable = true;
 
   boot.loader = {
     systemd-boot.enable = true;
