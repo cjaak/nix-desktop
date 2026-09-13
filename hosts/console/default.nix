@@ -178,6 +178,7 @@ in
   environment.systemPackages = with pkgs; [
     wget
     htop
+    jellyfin-media-player
     (writeShellScriptBin "stremio" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${pkgs.stremio-linux-shell}/bin/stremio
