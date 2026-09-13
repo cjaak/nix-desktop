@@ -96,6 +96,10 @@ in
     enable = true;
     wayland.enable = true;
   };
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = username;
+  };
   services.desktopManager.plasma6.enable = true;
 
   jovian.steam = {
