@@ -68,6 +68,9 @@ in
 
   system.stateVersion = "25.11";
 
+  virtualisation.waydroid.enable = true;
+  boot.kernelModules = [ "binder_linux" ];
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -164,32 +167,13 @@ in
   environment.systemPackages = with pkgs; [
     wget
     htop
-    google-chrome
-    (kodi-wayland.withPackages (p: with p; [
-      jellycon
-      inputstream-adaptive
-      inputstreamhelper
-      netflix
-      youtube
-      sponsorblock
-      joystick
-      controller-topology-project
-    ]))
-    (writeShellScriptBin "kodi-streaming" ''
+    (writeShellScriptBin "stremio" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${kodi-wayland.withPackages (p: with p; [
-        jellycon inputstream-adaptive inputstreamhelper netflix
-        youtube sponsorblock joystick controller-topology-project
-      ])}/bin/kodi
+      ${pkgs.stremio}/bin/stremio
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
       exec ${glKickstart}/bin/gl-kickstart ${pkgs.firefox-bin}/bin/firefox --kiosk https://nebula.tv
-    '')
-    (writeShellScriptBin "disney-plus" ''
-      sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${glKickstart}/bin/gl-kickstart ${pkgs.firefox-bin}/bin/firefox --kiosk https://www.disneyplus.com
-      sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
   ];
 }
