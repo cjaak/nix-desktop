@@ -169,7 +169,7 @@ in
     htop
     (writeShellScriptBin "stremio" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
-      ${pkgs.stremio}/bin/stremio
+      ${pkgs.stremio-linux-shell}/bin/stremio
       sudo ${pkgs.systemd}/bin/systemctl stop wg-quick-wg0
     '')
     (writeShellScriptBin "nebula" ''
