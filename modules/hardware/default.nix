@@ -5,5 +5,6 @@
     ./network
     ./nvidia
     ./printing
+    ./rgb
   ];
 }
