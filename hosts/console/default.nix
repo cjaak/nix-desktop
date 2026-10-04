@@ -187,6 +187,7 @@ in
     wget
     htop
     jellyfin-media-player
+    firefox
     lutris
     wine
     winetricks
