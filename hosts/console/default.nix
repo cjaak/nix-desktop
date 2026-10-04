@@ -78,8 +78,6 @@ in
   };
 
   boot.kernelParams = [ "amdgpu.runpm=0" ];
-  boot.kernelModules = [ "cec" "drm_dp_cec" ];
-
   services.udev.extraRules = ''
     SUBSYSTEM=="cec", GROUP="video", MODE="0660"
   '';
