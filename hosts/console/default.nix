@@ -69,7 +69,7 @@ in
   system.stateVersion = "25.11";
 
   virtualisation.waydroid.enable = true;
-  boot.kernelModules = [ "binder_linux" ];
+  boot.kernelModules = [ "binder_linux" "cec" "drm_dp_cec" ];
   networking.nftables.enable = true;
 
   boot.loader = {
