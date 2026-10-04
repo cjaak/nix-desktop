@@ -78,6 +78,11 @@ in
   };
 
   boot.kernelParams = [ "amdgpu.runpm=0" ];
+  boot.kernelModules = [ "cec" "drm_dp_cec" ];
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="cec", GROUP="video", MODE="0660"
+  '';
 
   networking = {
     hostName = "console";
@@ -154,7 +159,7 @@ in
   };
 
   users.users.${username} = {
-    extraGroups = [ "input" ];
+    extraGroups = [ "input" "video" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwCrkUq76rnolIfL8eApseG7rlmxCWDlqPx2Xti/fYH chwiegand@proton.me"
     ];
