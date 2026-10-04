@@ -191,6 +191,7 @@ in
     lutris
     wine
     winetricks
+    protonup-qt
     (writeShellScriptBin "stremio" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${pkgs.stremio-linux-shell}/bin/stremio
