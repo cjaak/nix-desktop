@@ -77,9 +77,14 @@ in
     efi.canTouchEfiVariables = true;
   };
 
+  boot.kernelParams = [ "amdgpu.runpm=0" ];
+
   networking = {
     hostName = "console";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = false;
+    };
   };
 
   fileSystems."/mnt/games" = {
@@ -179,6 +184,9 @@ in
     wget
     htop
     jellyfin-media-player
+    lutris
+    wine
+    winetricks
     (writeShellScriptBin "stremio" ''
       sudo ${pkgs.systemd}/bin/systemctl start wg-quick-wg0
       ${pkgs.stremio-linux-shell}/bin/stremio
