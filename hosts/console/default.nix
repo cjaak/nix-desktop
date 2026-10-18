@@ -77,7 +77,7 @@ in
     efi.canTouchEfiVariables = true;
   };
 
-  boot.kernelParams = [ "amdgpu.runpm=0" ];
+  boot.kernelParams = [ "amdgpu.runpm=0" "mem_sleep_default=s2idle" ];
   services.udev.extraRules = ''
     SUBSYSTEM=="cec", GROUP="video", MODE="0660"
   '';
