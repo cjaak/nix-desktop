@@ -86,12 +86,12 @@ in
 
   # Neither S3 nor s2idle resume reliably (SMU RunDcBtc times out on s2idle,
   # MODE1 reset leaves display dead on S3). Disable all sleep for this console.
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-    AllowHibernation=no
-    AllowSuspendThenHibernate=no
-    AllowHybridSleep=no
-  '';
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = false;
+    AllowHibernation = false;
+    AllowSuspendThenHibernate = false;
+    AllowHybridSleep = false;
+  };
 
   services.udev.extraRules = ''
     SUBSYSTEM=="cec", GROUP="video", MODE="0660"
