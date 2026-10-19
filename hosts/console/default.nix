@@ -78,6 +78,21 @@ in
   };
 
   boot.kernelParams = [ "amdgpu.runpm=0" "mem_sleep_default=s2idle" ];
+
+  # snd_hda_intel powers down the GPU DP audio codec after 10s of silence by
+  # default. When it wakes, the Hisense TV briefly drops its entire HDMI input
+  # (video + audio) while renegotiating the audio link — causing black screens.
+  boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
+
+  # Neither S3 nor s2idle resume reliably (SMU RunDcBtc times out on s2idle,
+  # MODE1 reset leaves display dead on S3). Disable all sleep for this console.
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowSuspendThenHibernate=no
+    AllowHybridSleep=no
+  '';
+
   services.udev.extraRules = ''
     SUBSYSTEM=="cec", GROUP="video", MODE="0660"
   '';
