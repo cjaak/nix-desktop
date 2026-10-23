@@ -77,7 +77,7 @@ in
     efi.canTouchEfiVariables = true;
   };
 
-  boot.kernelParams = [ "amdgpu.runpm=0" ];
+  boot.kernelParams = [ "amdgpu.runpm=0" "amdgpu.dcdebugmask=0" ];
 
   # snd_hda_intel powers down the GPU DP audio codec after 10s of silence by
   # default. When it wakes, the Hisense TV briefly drops its entire HDMI input
