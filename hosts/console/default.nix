@@ -79,10 +79,13 @@ in
 
   boot.kernelParams = [ "amdgpu.runpm=0" "amdgpu.dcdebugmask=0" ];
 
-  # snd_hda_intel powers down the GPU DP audio codec after 10s of silence by
-  # default. When it wakes, the Hisense TV briefly drops its entire HDMI input
-  # (video + audio) while renegotiating the audio link — causing black screens.
-  boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
+  # snd_hda_intel power_save=0 disables the codec idle timer, but the HDA
+  # controller itself still does PCI runtime PM (autosuspend_delay_ms=0).
+  # When the controller wakes it re-reads the display ELD, triggering a brief
+  # HDMI re-negotiation visible as a black screen + audio dropout.
+  # power_save_controller=0 calls pm_runtime_forbid() on the PCI device,
+  # preventing the controller from suspending independently of the GPU.
+  boot.extraModprobeConfig = "options snd_hda_intel power_save=0 power_save_controller=0";
 
   services.udev.extraRules = ''
     SUBSYSTEM=="cec", GROUP="video", MODE="0660"
