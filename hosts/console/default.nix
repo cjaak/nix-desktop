@@ -157,6 +157,14 @@ in
     trusted-public-keys = [ "jovian.cachix.org-1:MEf8Kz4R5VC14bRqCuLtP1I3JmHqSByXjANJ/xpVNM8=" ];
   };
 
+  # The Hisense TV presents a different EDID (BT.2020 vs DCI-P3 white point)
+  # after any HDR colorimetry negotiation, which causes a full HDMI reconnect.
+  # Setting STEAM_GAMESCOPE_HDR_SUPPORTED=0 via the Jovian pre-exec hook
+  # prevents gamescope from advertising HDR to Steam or touching DRM HDR metadata.
+  environment.etc."xdg/gamescope-session/environment".text = ''
+    STEAM_GAMESCOPE_HDR_SUPPORTED=0
+  '';
+
   home-manager.users.${username} = {
     home.enableNixpkgsReleaseCheck = false;
     home.file.".steam/steam/.cef-enable-remote-debugging".text = "";
