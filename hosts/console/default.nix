@@ -160,12 +160,14 @@ in
     trusted-public-keys = [ "jovian.cachix.org-1:MEf8Kz4R5VC14bRqCuLtP1I3JmHqSByXjANJ/xpVNM8=" ];
   };
 
-  # The Hisense TV presents a different EDID (BT.2020 vs DCI-P3 white point)
-  # after any HDR colorimetry negotiation, which causes a full HDMI reconnect.
-  # Setting STEAM_GAMESCOPE_HDR_SUPPORTED=0 via the Jovian pre-exec hook
-  # prevents gamescope from advertising HDR to Steam or touching DRM HDR metadata.
+  # The Hisense TV changes its EDID (BT.2020 vs DCI-P3 white point) whenever
+  # gamescope alternates between HDR10 and SDR metadata, which triggers a full
+  # HDMI reconnect each time. Forcing constant HDR10 PQ output keeps the PCON
+  # and TV in a single stable mode — no alternation, no mode switches.
+  # Disabling HDR entirely (HDR_SUPPORTED=0) is worse: it puts the PCON in SDR
+  # mode where it drops the HDMI link every 5-10s with no kernel-visible events.
   environment.etc."xdg/gamescope-session/environment".text = ''
-    STEAM_GAMESCOPE_HDR_SUPPORTED=0
+    STEAM_GAMESCOPE_FORCE_OUTPUT_TO_HDR10PQ_DEFAULT=1
   '';
 
   home-manager.users.${username} = {
