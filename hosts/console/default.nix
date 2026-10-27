@@ -167,7 +167,7 @@ in
   # Disabling HDR entirely (HDR_SUPPORTED=0) is worse: it puts the PCON in SDR
   # mode where it drops the HDMI link every 5-10s with no kernel-visible events.
   environment.etc."xdg/gamescope-session/environment".text = ''
-    STEAM_GAMESCOPE_FORCE_OUTPUT_TO_HDR10PQ_DEFAULT=1
+    export STEAM_GAMESCOPE_FORCE_OUTPUT_TO_HDR10PQ_DEFAULT=1
   '';
 
   home-manager.users.${username} = {
