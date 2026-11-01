@@ -54,12 +54,21 @@ hl.config({
   },
 })
 
+hl.window_rule({
+  name  = "calendar-popup",
+  match = { class = "cal%-popup" },
+  float = true,
+  size  = "560 240",
+  center = true,
+  pin   = true,
+})
+
 hl.on("hyprland.start", function()
   hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
   hl.exec_cmd("dunst")
   hl.exec_cmd("swww-daemon")
   hl.exec_cmd("swww img ~/.wallpapers/landscape0.png")
-  hl.exec_cmd("waybar")
+  hl.exec_cmd("bash -c 'waybar &'")
 end)
 
 local mod = "SUPER"

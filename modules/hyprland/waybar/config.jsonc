@@ -1,65 +1,77 @@
 [
   // ── Top bar – all monitors ─────────────────────────────────────────────────
-  // Left: CPU usage / RAM / temp   Center: clock   Right: GPU temp / mem / usage
   {
     "layer": "top",
     "position": "top",
-    "height": 32,
+    "height": 34,
     "modules-left":   ["cpu", "memory", "temperature"],
     "modules-center": ["clock"],
     "modules-right":  ["custom/gpu-temp", "custom/gpu-mem", "custom/gpu-usage"],
 
     "cpu": {
       "interval": 1,
-      "format": "󰘚  {usage}%",
+      "format": " {usage}%",
       "on-click": "wezterm -e btop"
     },
     "memory": {
       "interval": 1,
-      "format": "  {used:0.1f}G"
+      "format": " {used:0.1f}G"
     },
     "temperature": {
-      "hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input",
+      "hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input",
       "critical-threshold": 90,
       "interval": 1,
-      "format": "  {temperatureC}°C",
-      "format-critical": "  {temperatureC}°C"
+      "format": " {temperatureC}°C",
+      "format-critical": " {temperatureC}°C"
     },
     "clock": {
-      "interval": 30,
-      "format": "  {:%H:%M}    {:%d %b %Y}",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+      "interval": 1,
+      "format": " {:%H:%M}",
+      "format-alt": " {:%H:%M   %a %d %b %Y}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+      "on-click": "~/.config/waybar/scripts/calendar.sh",
+      "calendar": {
+        "mode": "year",
+        "weeks-pos": "right",
+        "mode-mon-col": 3,
+        "format": {
+          "months":   "<span color='#D08B57'><b>{}</b></span>",
+          "weeks":    "<span color='#7699A3'><b>W{}</b></span>",
+          "weekdays": "<span color='#BFAA80'><b>{}</b></span>",
+          "days":     "<span color='#DDD5C4'><b>{}</b></span>",
+          "today":    "<span color='#D08B57'><b><u>{}</u></b></span>"
+        }
+      }
     },
     "custom/gpu-temp": {
       "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader | awk '{print $1\"°C\"}'",
       "interval": 1,
-      "format": "  {}"
+      "format": " {}"
     },
     "custom/gpu-mem": {
       "exec": "nvidia-smi --query-gpu=memory.used --format=csv,noheader",
       "interval": 1,
-      "format": "  {}"
+      "format": " {}"
     },
     "custom/gpu-usage": {
       "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | awk '{print $1\"%\"}'",
       "interval": 1,
-      "format": "  {}"
+      "format": " {}"
     }
   },
 
   // ── Bottom bar – DP-2 (LG UltraGear, primary) ──────────────────────────────
-  // Left: UFW / network   Center: workspaces   Right: tray / audio
   {
     "layer": "top",
     "output": "DP-2",
     "position": "bottom",
-    "height": 32,
+    "height": 34,
     "modules-left":   ["custom/ufw", "network"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right":  ["tray", "pulseaudio"],
 
     "custom/ufw": {
-      "exec": "systemctl is-active --quiet ufw && printf '{\"text\":\"󱨑\",\"class\":\"active\",\"tooltip\":\"UFW active\"}' || printf '{\"text\":\"󱨑\",\"class\":\"inactive\",\"tooltip\":\"UFW inactive\"}'",
+      "exec": "systemctl is-active --quiet ufw && printf '{\"text\":\"\",\"class\":\"active\",\"tooltip\":\"UFW active\"}' || printf '{\"text\":\"\",\"class\":\"inactive\",\"tooltip\":\"UFW inactive\"}'",
       "return-type": "json",
       "interval": 60,
       "format": "{}"
@@ -67,43 +79,68 @@
     "network": {
       "interface": "enp10s0",
       "interval": 1,
-      "format-ethernet": "󰈀  ↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
-      "format-disconnected": "󰈂  disconnected",
+      "format-ethernet": " {bandwidthDownBytes}   {bandwidthUpBytes}",
+      "format-disconnected": " disconnected",
       "tooltip-format-ethernet": "{ipaddr}"
     },
     "hyprland/workspaces": {
       "all-outputs": true,
-      "format": "{id}",
-      "on-click": "activate"
+      "format": "{icon}",
+      "on-click": "activate",
+      "persistent-workspaces": { "*": 10 },
+      "format-icons": {
+        "active":  "",
+        "default": "",
+        "empty":   "",
+        "urgent":  ""
+      }
     },
     "tray": {
-      "spacing": 6
+      "spacing": 8
     },
     "pulseaudio": {
-      "format": "󰕾  {volume}%",
-      "format-muted": "󰝟  {volume}%",
+      "format": " {volume}%",
+      "format-muted": " {volume}%",
       "on-click": "pavucontrol",
       "scroll-step": 5
     }
   },
 
-  // ── Bottom bar – DP-3 (LG UltraWide) ──────────────────────────────────────
+  // ── Bottom bar – DP-3 (LG UltraWide) ───────────────────────────────────────
   {
     "layer": "top",
     "output": "DP-3",
     "position": "bottom",
-    "height": 32,
+    "height": 34,
     "modules-center": ["hyprland/workspaces"],
     "modules-right":  ["clock"],
 
     "hyprland/workspaces": {
       "all-outputs": true,
-      "format": "{id}",
-      "on-click": "activate"
+      "format": "{icon}",
+      "on-click": "activate",
+      "persistent-workspaces": { "*": 10 },
+      "format-icons": {
+        "active":  "",
+        "default": "",
+        "empty":   "",
+        "urgent":  ""
+      }
     },
     "clock": {
       "interval": 30,
-      "format": "  {:%H:%M}    {:%d %b}"
+      "format": " {:%H:%M}",
+      "format-alt": " {:%H:%M   %a %d %b}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+      "calendar": {
+        "mode": "month",
+        "format": {
+          "months":   "<span color='#D08B57'><b>{}</b></span>",
+          "weekdays": "<span color='#BFAA80'><b>{}</b></span>",
+          "days":     "<span color='#DDD5C4'><b>{}</b></span>",
+          "today":    "<span color='#D08B57'><b><u>{}</u></b></span>"
+        }
+      }
     }
   },
 
@@ -112,18 +149,36 @@
     "layer": "top",
     "output": "HDMI-A-2",
     "position": "bottom",
-    "height": 32,
+    "height": 34,
     "modules-center": ["hyprland/workspaces"],
     "modules-right":  ["clock"],
 
     "hyprland/workspaces": {
       "all-outputs": true,
-      "format": "{id}",
-      "on-click": "activate"
+      "format": "{icon}",
+      "on-click": "activate",
+      "persistent-workspaces": { "*": 10 },
+      "format-icons": {
+        "active":  "",
+        "default": "",
+        "empty":   "",
+        "urgent":  ""
+      }
     },
     "clock": {
       "interval": 30,
-      "format": "  {:%H:%M}    {:%d %b}"
+      "format": " {:%H:%M}",
+      "format-alt": " {:%H:%M   %a %d %b}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+      "calendar": {
+        "mode": "month",
+        "format": {
+          "months":   "<span color='#D08B57'><b>{}</b></span>",
+          "weekdays": "<span color='#BFAA80'><b>{}</b></span>",
+          "days":     "<span color='#DDD5C4'><b>{}</b></span>",
+          "today":    "<span color='#D08B57'><b><u>{}</u></b></span>"
+        }
+      }
     }
   }
 ]

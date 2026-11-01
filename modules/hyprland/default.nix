@@ -16,6 +16,10 @@
     xdg.configFile."hypr/hyprland.lua".source = ./config/hyprland.lua;
     xdg.configFile."waybar/config.jsonc".source = ./waybar/config.jsonc;
     xdg.configFile."waybar/style.css".source = ./waybar/style.css;
+    xdg.configFile."waybar/scripts/calendar.sh" = {
+      source      = ./waybar/scripts/calendar.sh;
+      executable  = true;
+    };
     home.packages = with pkgs; [
       swww          # wallpaper
       swaylock      # lock screen
