@@ -3,6 +3,8 @@
     ./hardware-configuration.nix
   ];
 
+  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
+
   system.stateVersion = "25.11";
 
   environment.systemPackages = [

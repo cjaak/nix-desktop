@@ -26,6 +26,11 @@
     };
     deploy-rs.url = "github:serokell/deploy-rs";
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS/6087aab8ab19bc314bbe132c6f3114a85d772375";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hy3 = {
+      url = "github:outfoxxed/hy3";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, deploy-rs, jovian-nixos, ... }@attrs:
@@ -51,7 +56,8 @@
           specialArgs = {
             username = "charlie";
             hostName = "desktop";
-            DE = "awesome";
+            DE = [ "awesome" "hyprland" ];
+            inputs = attrs;
            inherit system;
            } //attrs;
           modules = [./.];

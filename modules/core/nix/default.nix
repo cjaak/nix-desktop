@@ -7,6 +7,8 @@
     })
   ];
 
+  boot.loader.systemd-boot.configurationLimit = 5;
+
   # Enable Flakes and nix-commands, enable removing channels
     nix = {
       #package = pkgs.nixVersions.nix_2_21;
@@ -15,6 +17,11 @@
         "nix-command"
         "flakes"
       ];
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
     };
 
 

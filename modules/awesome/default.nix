@@ -70,7 +70,7 @@
     enable = true;
     config = {
       common = {
-        default = [ "xdph" "gtk" ];
+        default = [ "gtk" ];
         "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
       };

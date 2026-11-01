@@ -1,5 +1,15 @@
 { pkgs, lib, ... }:
 let
+  antimicrox = pkgs.antimicrox.overrideAttrs (_: {
+    version = "3.6.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "AntiMicroX";
+      repo = "antimicrox";
+      rev = "3.6.1";
+      hash = "sha256-frPXUTbD5Wk0Wo8E9L8Es5GCvWY55Qx0RGSkYDaVs6g=";
+    };
+  });
+
   starparseDesktop = pkgs.makeDesktopItem {
     name = "starparse";
     exec = "starparse";
@@ -70,33 +80,44 @@ let
     '';
   };
 
-  baras = pkgs.appimageTools.wrapType2 {
-    pname = "baras";
-    version = "2026.8.9";
-    src = pkgs.fetchurl {
-      url = "https://github.com/baras-app/baras/releases/download/v2026.8.9/BARAS_2026.8.9_amd64.AppImage";
-      hash = "sha256-nleE8PVjQhmxSYmmVE9xfEa1unxV+zARpWxzbfpJZDY=";
-    };
-    extraInstallCommands =
-      let
-        icon = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/baras-app/baras/master/app/src-tauri/icons/128x128.png";
-          hash = "sha256-dl2+oXYY650AA9oI/5bYUpOYp2iJ3jIkGD8BQjAy/WY=";
+  baras =
+    let
+      appimage = pkgs.appimageTools.wrapType2 {
+        pname = "baras";
+        version = "2026.9.30";
+        src = pkgs.fetchurl {
+          url = "https://github.com/baras-app/baras/releases/download/v2026.9.30/BARAS_2026.9.30_amd64.AppImage";
+          hash = "sha256-vLUMuoOpekfA1UfwkMN/DccKBuMnPZoODx5y++w9AR4=";
         };
-        desktop = pkgs.makeDesktopItem {
-          name = "baras";
-          exec = "baras";
-          desktopName = "BARAS";
-          comment = "SWTOR Combat Parser";
-          categories = [ "Game" ];
-          icon = "baras";
-        };
-      in
-      ''
-        install -Dm644 ${desktop}/share/applications/baras.desktop $out/share/applications/baras.desktop
-        install -Dm644 ${icon} $out/share/icons/hicolor/128x128/apps/baras.png
+        extraInstallCommands =
+          let
+            icon = pkgs.fetchurl {
+              url = "https://raw.githubusercontent.com/baras-app/baras/master/app/src-tauri/icons/128x128.png";
+              hash = "sha256-dl2+oXYY650AA9oI/5bYUpOYp2iJ3jIkGD8BQjAy/WY=";
+            };
+            desktop = pkgs.makeDesktopItem {
+              name = "baras";
+              exec = "baras";
+              desktopName = "BARAS";
+              comment = "SWTOR Combat Parser";
+              categories = [ "Game" ];
+              icon = "baras";
+            };
+          in
+          ''
+            install -Dm644 ${desktop}/share/applications/baras.desktop $out/share/applications/baras.desktop
+            install -Dm644 ${icon} $out/share/icons/hicolor/128x128/apps/baras.png
+          '';
+      };
+    in pkgs.symlinkJoin {
+      name = "baras";
+      paths = [ appimage ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/baras \
+          --set WEBKIT_DISABLE_DMABUF_RENDERER 1
       '';
-  };
+    };
 in {
   programs.steam = {
     enable = true;
@@ -109,7 +130,7 @@ in {
   environment.systemPackages = with pkgs; [
     gamescope
     mangohud
-    antimicrox
+    antimicrox  # overridden to 3.6.1, fixes signal-handler re-entrancy crash on controller events
     lutris
     heroic
     wine
