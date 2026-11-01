@@ -1,0 +1,113 @@
+/* ── Palette ──────────────────────────────────────────────────────────────── */
+/* background:     #050505  foreground:     #FAFAFA                           */
+/* pill-bg:        #FAFAFA  pill-fg:        #050505                           */
+/* yellow:         #e0af68  green:          #9ece6a  red: #ff453a             */
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+window#waybar {
+  background-color: #050505;
+  color: #FAFAFA;
+}
+
+/* ── Pill base – all non-workspace modules ──────────────────────────────── */
+#cpu,
+#memory,
+#temperature,
+#clock,
+#custom-gpu-temp,
+#custom-gpu-mem,
+#custom-gpu-usage,
+#custom-ufw,
+#network,
+#pulseaudio,
+#tray {
+  background-color: #FAFAFA;
+  color: #050505;
+  padding: 0 10px;
+  border-radius: 4px;
+  margin: 4px 3px;
+}
+
+/* ── Icon accent colour (yellow) ─────────────────────────────────────────── */
+#cpu,
+#memory,
+#temperature,
+#custom-gpu-temp,
+#custom-gpu-mem,
+#custom-gpu-usage {
+  color: #050505;
+}
+
+/* Temperature critical */
+#temperature.critical {
+  background-color: #ff453a;
+  color: #FAFAFA;
+}
+
+/* ── UFW ──────────────────────────────────────────────────────────────────── */
+#custom-ufw.active   { color: #9ece6a; }
+#custom-ufw.inactive { color: #ff453a; }
+
+/* ── Workspaces ───────────────────────────────────────────────────────────── */
+#workspaces {
+  background-color: transparent;
+  margin: 4px 3px;
+}
+
+#workspaces button {
+  background-color: #1a1a1a;
+  color: #888888;
+  padding: 0 10px;
+  border-radius: 4px;
+  margin: 0 2px;
+  min-width: 28px;
+  transition: all 0.15s ease;
+}
+
+#workspaces button.active {
+  background-color: #FAFAFA;
+  color: #050505;
+}
+
+#workspaces button.occupied {
+  background-color: #2e2e2e;
+  color: #FAFAFA;
+}
+
+#workspaces button:hover {
+  background-color: #e0af68;
+  color: #050505;
+}
+
+/* ── Tray ─────────────────────────────────────────────────────────────────── */
+#tray {
+  padding: 0 6px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: #e0af68;
+}
+
+/* ── Tooltip ──────────────────────────────────────────────────────────────── */
+tooltip {
+  background-color: #050505;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  color: #FAFAFA;
+}

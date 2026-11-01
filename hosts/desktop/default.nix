@@ -3,7 +3,12 @@
     ./hardware-configuration.nix
   ];
 
-  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
+  boot.kernelParams = [
+    "usbcore.autosuspend=-1"
+    # SteelSeries Aerox 9 Wireless (1038:185a) can't handle USB Link Power Management;
+    # without this it fails to re-enumerate after libinput grabs it in Hyprland
+    "usbcore.quirks=1038:185a:0x0800"
+  ];
 
   system.stateVersion = "25.11";
 

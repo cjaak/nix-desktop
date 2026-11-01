@@ -6,21 +6,21 @@ require("hyprland-plugins")
 hl.monitor({
   output    = "HDMI-A-2",  -- Huawei AD80HW
   mode      = "1920x1080",
-  position  = "0,548",
+  position  = "0x548",
   scale     = 1,
   transform = 1,           -- rotate left (90° CCW)
 })
 hl.monitor({
   output    = "DP-2",      -- LG ULTRAGEAR
   mode      = "2560x1440@180",
-  position  = "1080,1080",
+  position  = "1080x1080",
   scale     = 1,
   transform = 0,
 })
 hl.monitor({
   output    = "DP-3",      -- LG ULTRAWIDE
   mode      = "2560x1080",
-  position  = "1080,0",
+  position  = "1080x0",
   scale     = 1,
   transform = 2,           -- inverted (180°)
 })
@@ -56,6 +56,10 @@ hl.config({
 
 hl.on("hyprland.start", function()
   hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+  hl.exec_cmd("dunst")
+  hl.exec_cmd("swww-daemon")
+  hl.exec_cmd("swww img ~/.wallpapers/landscape0.png")
+  hl.exec_cmd("waybar")
 end)
 
 local mod = "SUPER"
@@ -63,7 +67,7 @@ local mod = "SUPER"
 hl.bind(mod .. " + Return",        hl.dsp.exec_cmd("wezterm"))
 hl.bind(mod .. " + T",             hl.dsp.exec_cmd("wezterm"))
 hl.bind(mod .. " + D",             hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind(mod .. " + SHIFT + Q",     hl.dsp.window.close())
+hl.bind(mod .. " + Q",             hl.dsp.window.close())
 hl.bind(mod .. " + F",             hl.dsp.window.fullscreen())
 hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + SHIFT + E",     hl.dsp.exit())
@@ -98,3 +102,20 @@ end
 -- mouse drag / resize
 hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- apps (Super+B skipped — conflicts with hy3:makegroup h)
+hl.bind(mod .. " + S",       hl.dsp.exec_cmd("~/.config/rofi/tmux.sh"))
+hl.bind(mod .. " + Tab",     hl.dsp.exec_cmd("~/.config/rofi/window.sh"))
+hl.bind(mod .. " + Escape",  hl.dsp.exec_cmd("swaylock"))
+
+-- dunst
+hl.bind(mod .. " + M", hl.dsp.exec_cmd("dunstctl set-paused toggle"))
+hl.bind(mod .. " + N", hl.dsp.exec_cmd("dunstctl close-all"))
+
+-- audio
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"))
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"))
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer -t"))
+
+-- screenshot: select region → clipboard
+hl.bind("Print", hl.dsp.exec_cmd([[bash -c 'grim -g "$(slurp)" - | wl-copy']]))
