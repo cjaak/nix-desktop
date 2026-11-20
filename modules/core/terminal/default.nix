@@ -32,6 +32,7 @@
 
   home-manager.sharedModules = [
     (import ./wezterm)
+    (import ./kitty)
     (import ./starship)
     (import ./tmux)
     (import ./nvim)

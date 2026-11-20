@@ -34,10 +34,12 @@ hl.monitor({
 
 hl.config({
   general = {
-    layout      = "hy3",
-    gaps_in     = 5,
-    gaps_out    = 10,
-    border_size = 2,
+    layout             = "hy3",
+    gaps_in            = 5,
+    gaps_out           = 10,
+    border_size        = 2,
+    ["col.active_border"]   = "rgb(D08B57)",
+    ["col.inactive_border"] = "rgb(3A372F)",
   },
   decoration = {
     rounding = 6,
@@ -47,6 +49,9 @@ hl.config({
     kb_layout    = "us",
     follow_mouse = 1,
     sensitivity  = 0,
+  },
+  cursor = {
+    no_hardware_cursors = true,
   },
   misc = {
     force_default_wallpaper = 0,
@@ -65,7 +70,8 @@ hl.window_rule({
 
 hl.on("hyprland.start", function()
   hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-  hl.exec_cmd("dunst")
+  hl.exec_cmd("hyprctl setcursor Adwaita 24")
+  hl.exec_cmd("swaync")
   hl.exec_cmd("swww-daemon")
   hl.exec_cmd("swww img ~/.wallpapers/landscape0.png")
   hl.exec_cmd("bash -c 'waybar &'")
@@ -73,13 +79,14 @@ end)
 
 local mod = "SUPER"
 
-hl.bind(mod .. " + Return",        hl.dsp.exec_cmd("wezterm"))
-hl.bind(mod .. " + T",             hl.dsp.exec_cmd("wezterm"))
+hl.bind(mod .. " + Return",        hl.dsp.exec_cmd("kitty"))
+hl.bind(mod .. " + T",             hl.dsp.exec_cmd("kitty"))
 hl.bind(mod .. " + D",             hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind(mod .. " + Q",             hl.dsp.window.close())
 hl.bind(mod .. " + F",             hl.dsp.window.fullscreen())
 hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mod .. " + SHIFT + E",     hl.dsp.exit())
+hl.bind(mod .. " + SHIFT + R",     hl.dsp.exec_cmd("bash -c 'hyprctl reload && pkill waybar; waybar &'"))
+hl.bind(mod .. " + SHIFT + E",     hl.dsp.exec_cmd("bash -c 'wlogout -l $HOME/.config/wlogout/layout -b 2 -L 800 -R 800 -T 350 -B 350'"))
 
 -- hy3 focus (vim keys)
 hl.bind(mod .. " + H", hl.dsp.exec_cmd("hyprctl dispatch hy3:movefocus l"))
@@ -117,9 +124,9 @@ hl.bind(mod .. " + S",       hl.dsp.exec_cmd("~/.config/rofi/tmux.sh"))
 hl.bind(mod .. " + Tab",     hl.dsp.exec_cmd("~/.config/rofi/window.sh"))
 hl.bind(mod .. " + Escape",  hl.dsp.exec_cmd("swaylock"))
 
--- dunst
-hl.bind(mod .. " + M", hl.dsp.exec_cmd("dunstctl set-paused toggle"))
-hl.bind(mod .. " + N", hl.dsp.exec_cmd("dunstctl close-all"))
+-- swaync
+hl.bind(mod .. " + M", hl.dsp.exec_cmd("swaync-client -t"))
+hl.bind(mod .. " + N", hl.dsp.exec_cmd("swaync-client -C"))
 
 -- audio
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"))
@@ -127,4 +134,5 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"))
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer -t"))
 
 -- screenshot: select region → clipboard
-hl.bind("Print", hl.dsp.exec_cmd([[bash -c 'grim -g "$(slurp)" - | wl-copy']]))
+hl.bind("Print",                    hl.dsp.exec_cmd([[bash -c 'grim -g "$(slurp)" - | wl-copy']]))
+hl.bind(mod .. " + SHIFT + S",      hl.dsp.exec_cmd([[bash -c 'grim -g "$(slurp)" - | wl-copy']]))

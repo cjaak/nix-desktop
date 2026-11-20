@@ -205,8 +205,13 @@ in
   environment.systemPackages = with pkgs; [
     wget
     htop
-    jellyfin-media-player
     firefox
+    # gl-kickstart wrapper: JMP uses Qt WebEngine (Chromium/EGL) which never
+    # fires a DRI3 hardware frame, so Gamescope never makes the window visible.
+    # Same fix as nebula — force one GLX frame first, then exec the real app.
+    (writeShellScriptBin "jellyfin" ''
+      exec ${glKickstart}/bin/gl-kickstart ${pkgs.jellyfin-media-player}/bin/jellyfin-desktop "$@"
+    '')
     lutris
     wine
     winetricks

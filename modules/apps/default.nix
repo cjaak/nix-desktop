@@ -10,8 +10,9 @@
     (import ./onlyoffice)
     (import ./opencode)
     (import ./vscodium)
+    (import ./blender)
     ({ pkgs, ... }: {
-      home.packages = with pkgs; [ mullvad-vpn bambu-studio google-chrome ];
+      home.packages = with pkgs; [ mullvad-vpn bambu-studio google-chrome freecad];
       programs.zathura.enable = true;
     })
   ];

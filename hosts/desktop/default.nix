@@ -5,9 +5,9 @@
 
   boot.kernelParams = [
     "usbcore.autosuspend=-1"
-    # SteelSeries Aerox 9 Wireless (1038:185a) can't handle USB Link Power Management;
-    # without this it fails to re-enumerate after libinput grabs it in Hyprland
-    "usbcore.quirks=1038:185a:0x0800"
+    # Aerox 9 Wireless dongle disconnects ~90s after boot if not constantly polled;
+    # 0x0040 = HID_QUIRK_ALWAYS_POLL keeps host traffic going so the dongle stays awake
+    "usbhid.quirks=0x1038:0x185a:0x0040"
   ];
 
   system.stateVersion = "25.11";

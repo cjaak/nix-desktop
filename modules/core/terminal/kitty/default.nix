@@ -1,0 +1,52 @@
+{ ... }: {
+  programs.kitty = {
+    enable = true;
+
+    settings = {
+      # Font
+      font_family      = "JetBrainsMono Nerd Font";
+      bold_font        = "auto";
+      italic_font      = "auto";
+      bold_italic_font = "auto";
+      font_size        = "11.0";
+      disable_ligatures = "never";
+
+      # Cursor
+      cursor_shape                = "beam";
+      cursor_beam_thickness       = "1.5";
+      cursor_blink_interval       = "0.5";
+      cursor_stop_blinking_after  = 0;
+      cursor_trail                = 10;
+      cursor_trail_decay          = "0.1 0.4";
+      cursor_trail_start_threshold = 2;
+      cursor_trail_color          = "none";
+
+      # Mouse & Link
+      detect_urls    = true;
+      url_style      = "curly";
+      mouse_hide_wait = "3.0";
+
+      # Performance & Bell
+      repaint_delay      = 10;
+      input_delay        = 2;
+      enable_audio_bell  = false;
+
+      # Window Layout
+      window_padding_width     = 15;
+      hide_window_decorations  = true;
+      confirm_os_window_close  = 0;
+
+      # Look
+#      background_opacity         = "0.90";
+#      dynamic_background_opacity = true;
+
+      # Shell
+      shell = "fish";
+    };
+
+    extraConfig = builtins.readFile ./kitty-theme.conf + ''
+
+      mouse_map middle release ungrabbed paste_from_selection
+    '';
+  };
+}
