@@ -1,6 +1,8 @@
 { ... }: {
   imports = [ ./gaming ];
 
+  services.mullvad-vpn.enable = true;
+
   home-manager.sharedModules = [
     (import ./discord)
     (import ./firefox)
