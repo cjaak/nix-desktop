@@ -1,5 +1,42 @@
 { pkgs, lib, username, ... }:
 let
+  zelda64recomp = pkgs.stdenv.mkDerivation {
+    pname = "zelda64recompiled";
+    version = "1.2.2";
+    src = pkgs.fetchurl {
+      url = "https://github.com/Zelda64Recomp/Zelda64Recomp/releases/download/v1.2.2/Zelda64Recompiled-v1.2.2-Linux-X64.zip";
+      hash = "sha256-3osZzbTjrQwQ/W2BJ/emzCqeuhBticdTQ5F4txiIfEI=";
+    };
+    nativeBuildInputs = with pkgs; [ unzip autoPatchelfHook makeWrapper ];
+    buildInputs = with pkgs; [
+      freetype
+      SDL2
+      gtk3
+      pango
+      atk
+      cairo
+      gdk-pixbuf
+      glib
+      vulkan-loader
+      stdenv.cc.cc.lib
+    ];
+    unpackPhase = ''
+      unzip $src
+      tar xf Zelda64Recompiled.tar.gz
+    '';
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p $out/bin $out/share/zelda64recompiled
+      cp -r assets $out/share/zelda64recompiled/
+      cp recompcontrollerdb.txt $out/share/zelda64recompiled/
+      install -m755 Zelda64Recompiled $out/share/zelda64recompiled/
+      makeWrapper \
+        $out/share/zelda64recompiled/Zelda64Recompiled \
+        $out/bin/zelda64recompiled \
+        --run "cd $out/share/zelda64recompiled"
+    '';
+  };
+
   # Renders one GLX frame on the current DISPLAY then exec's the given command.
   # Gamescope auto-enables display when it receives a DRI3 hardware frame from
   # the XWayland window — this is how Kodi works. Browsers never trigger that
@@ -212,6 +249,7 @@ in
     (writeShellScriptBin "jellyfin" ''
       exec ${glKickstart}/bin/gl-kickstart ${pkgs.jellyfin-media-player}/bin/jellyfin-desktop "$@"
     '')
+    zelda64recomp
     lutris
     wine
     winetricks
