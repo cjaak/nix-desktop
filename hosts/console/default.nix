@@ -139,20 +139,6 @@ in
   jovian.decky-loader = {
     enable = true;
     user = username;
-    # Patch Decky's DFL static chunk so findClassModule calls return {} instead of
-    # undefined when Steam's CSS modules change between Steam updates. Without this,
-    # accessing e.g. quickAccessMenuClasses.Title throws and breaks the QAM.
-    package = pkgs.decky-loader.overrideAttrs (old: {
-      postInstall = (old.postInstall or "") + ''
-        dfl_chunk=$(echo $out/lib/python*/site-packages/decky_loader/static/chunk-D9GNoOBF.js)
-        if [ -f "$dfl_chunk" ]; then
-          substituteInPlace "$dfl_chunk" \
-            --replace-warn \
-              'findClassModule((m) => m.Title && m.QuickAccessMenu && m.BatteryDetailsLabels)' \
-              'findClassModule((m) => m.Title && m.QuickAccessMenu && m.BatteryDetailsLabels) || {}'
-        fi
-      '';
-    });
   };
 
   services.udisks2.enable = true;
