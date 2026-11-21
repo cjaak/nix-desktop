@@ -114,6 +114,12 @@ in
     options = [ "defaults" "nofail" ];
   };
 
+  fileSystems."/mnt/wd-black" = {
+    device = "/dev/disk/by-uuid/349252f3-ada1-4312-a81a-b38fe4b9e743";
+    fsType = "ext4";
+    options = [ "defaults" "nofail" ];
+  };
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
