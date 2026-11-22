@@ -147,6 +147,9 @@ in
     user = username;
   };
 
+  systemd.services.decky-loader.after = [ "avahi-daemon.service" "network-online.target" ];
+  systemd.services.decky-loader.wants = [ "network-online.target" ];
+
   services.avahi = {
     enable = true;
     nssmdns4 = true;
