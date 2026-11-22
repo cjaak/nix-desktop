@@ -147,6 +147,11 @@ in
     user = username;
   };
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+  };
+
   services.udisks2.enable = true;
 
   services.pipewire = {
