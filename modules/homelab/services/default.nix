@@ -17,5 +17,6 @@
      ./filebrowser
      ./rreading-glasses
      ./redirects
+     ./alvidaa
   ];
 }

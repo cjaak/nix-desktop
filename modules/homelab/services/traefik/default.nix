@@ -35,7 +35,6 @@ in
           "--entrypoints.websecure.http.tls.certResolver=letsencrypt"
           "--entrypoints.websecure.http.tls.domains[0].main=${vars.domainName}"
           "--entrypoints.websecure.http.tls.domains[0].sans=*.${vars.domainName}"
-
         ];
         extraOptions = [
           "--pull=newer"
