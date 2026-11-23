@@ -15,7 +15,7 @@ in
     # Install paho-mqtt into a persistent volume dir on first run only
     cmd = [
       "sh" "-c"
-      "test -d /app/deps/paho || pip install --target /app/deps paho-mqtt -q; PYTHONPATH=/app/deps python /app/vidaa_server.py 192.168.178.85 8765"
+      "cd /app && (test -d /app/deps/paho || pip install --target /app/deps paho-mqtt -q) && PYTHONPATH=/app/deps python vidaa_server.py 192.168.178.85 8765"
     ];
     volumes = [
       "${dataDir}/server:/app"
